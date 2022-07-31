@@ -10,6 +10,10 @@ on:
         description: Demo project
         required: true
 
+env:
+  #ARTIFACT_FOLDER_NAME: ""
+  AWS_REGION: "us-east-1"
+  BUCKET: "my-tf-test-bucket-25072022"
 
 jobs:
   build-java:
@@ -28,7 +32,19 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: ./gradlew build
+      uses: gradle/gradle-build-action@v2
+      with:
+        build-root-directory: 
+        arguments: build
+    
+    - name: Publish test results
+      uses: enricoMi/Publish-unit-test-result-action@v1
+      if: always()
+      with:
+        files: "./build/test-results/**/*.xml"
+      
+
+     # run: ./gradlew build
     
     - name: list the path
       run: |
