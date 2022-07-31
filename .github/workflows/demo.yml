@@ -31,15 +31,21 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    # - name: Build with Gradle
-    #   uses: gradle/gradle-build-action@v2
-    #   with:
-    #     build-root-directory: 
-    #     arguments: build
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        # build-root-directory: 
+        arguments: buildZip
+
+    - name: Upload build artifact
+      uses: action/upload-artifact@v3
+      with:
+        name: package
+        path: .
     
-    - name: Gradle Build
-      #uses: gradle/gradle-build-action@v2
-      run: ./gradlew build
+    # - name: Gradle Build
+    #   #uses: gradle/gradle-build-action@v2
+    #   run: ./gradlew build
     
     # - name: Publish test results
     #   uses: enricoMi/Publish-unit-test-result-action@v1
@@ -80,7 +86,7 @@ jobs:
       run: |
         pwd
         ls -l /home/runner/work/my-project/my-project
-        aws s3 cp . s3://my-tf-test-bucket-25072022 --recursive 
+        aws s3 cp *.zip s3://my-tf-test-bucket-25072022 --recursive 
 
 
       
