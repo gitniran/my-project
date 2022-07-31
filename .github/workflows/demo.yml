@@ -51,7 +51,8 @@ jobs:
       id: lib
 
     - name: Copy jar to artifact directory
-      run: cp ./build/libs/* ./artifact/
+      shell: /usr/bin/bash -e {0}
+      run: mkdir ./artifact && cp ./build/libs/* ./artifact/
 
     # - name: Upload build artifact
     #   uses: actions/upload-artifact@v3
