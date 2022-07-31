@@ -10,9 +10,9 @@ on:
         description: Demo project
         required: true
 
-# env:
+env:
 #   #ARTIFACT_FOLDER_NAME: ""
-#   AWS_REGION: "us-east-1"
+  AWS_REGION: "us-east-1"
 #   #BUCKET: "my-tf-test-bucket-25072022"
 
 jobs:
@@ -72,14 +72,15 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        #aws-region: ${{ env.AWS_REGION }}
+        aws-region: ${{ env.AWS_REGION }}
+
     - name: Upload to s3
       # env:
       #   VERSION: ${{ steps.get-version.outputs.result }}
-          run: |
-            pwd
-            ls -l /home/runner/work/my-project/my-project
-            aws s3 cp . s3://my-tf-test-bucket-25072022 --recursive 
+      run: |
+        pwd
+        ls -l /home/runner/work/my-project/my-project
+        aws s3 cp . s3://my-tf-test-bucket-25072022 --recursive 
 
 
       
