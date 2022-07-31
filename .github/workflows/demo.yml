@@ -56,17 +56,17 @@ jobs:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
 
-    - uses: actions/github-script@v6
-      id: get-version
-      with:
-        script: |
-          const { readdirSync } = require('fs')
-          let dirs = readdirSync(process + '/build/distributions');
-          let file = dirs.find(element => element.endsWith(".zip"));
-          let match = /([0-9]+([.][0-9]+)+(-SNAPSHOT)?)/.exec(file);
-          console.log("Found version: "+match[0])
-          return match[0]
-        result-encoding: string
+    # - uses: actions/github-script@v6
+    #   id: get-version
+    #   with:
+    #     script: |
+    #       const { readdirSync } = require('fs')
+    #       let dirs = readdirSync(process + '/build/distributions');
+    #       let file = dirs.find(element => element.endsWith(".zip"));
+    #       let match = /([0-9]+([.][0-9]+)+(-SNAPSHOT)?)/.exec(file);
+    #       console.log("Found version: "+match[0])
+    #       return match[0]
+    #     result-encoding: string
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
