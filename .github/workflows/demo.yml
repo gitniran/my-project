@@ -104,6 +104,8 @@ jobs:
         release_name: Release ${{ steps.current_version.outputs.app_version }}
         draft: false
         prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       id: create_release
 
     - name: Prepare an artifact
