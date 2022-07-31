@@ -37,6 +37,10 @@ jobs:
         build-root-directory: 
         arguments: build
     
+    - name: Gradle Build
+      #uses: gradle/gradle-build-action@v2
+      run: ./gradlew build
+    
     - name: Publish test results
       uses: enricoMi/Publish-unit-test-result-action@v1
       if: always()
@@ -50,10 +54,7 @@ jobs:
     #     arguments: release -Prelease.customUsername=$GITHUB_ACTOR -Prelease.customPassword=${{ secrets.GITHUB_TOKEN }}
     #   env:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-    - name: Gradle Build
-      uses: gradle/gradle-build-action@v2
-      run: ./gradlew build
+    
 
     - uses: actions/github-script@v6
       id: get-version
