@@ -1,10 +1,14 @@
 # This workflow will build a Java project with Gradle
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: Java CI with Gradle
+name: Demo-gradle-project
 
 on:
   without_dispatch:
+    input:
+      version:
+        description: Demo project
+        required: true
   # push:
   #   branches: [ master ]
   # pull_request:
