@@ -38,10 +38,11 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@v2
-      with:
-        # build-root-directory: 
-        arguments: buildZip
+      run: ./gradlew build
+      # uses: gradle/gradle-build-action@v2
+      # with:
+      #   # build-root-directory: 
+      #   arguments: build
 
     - name: Get the lib name
       run: |
@@ -50,7 +51,7 @@ jobs:
         id: lib
 
     - name: Copy jar to artifact directory
-      run: cp ./build/libs/${{ steps.lib.outputs.lib_name }} ./artifact/
+      run: cp ./build/libs/* ./artifact/
 
     # - name: Upload build artifact
     #   uses: actions/upload-artifact@v3
