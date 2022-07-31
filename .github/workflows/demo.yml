@@ -44,13 +44,13 @@ jobs:
         arguments: buildZip
 
     - name: Get the lib name
-        run: |
+      run: |
           mv ./build/libs/*.jar ./build/libs/newsroom_nmc-dgs.jar
           echo "::set-output name=lib_name::$(ls build/libs | grep -v "plain" | grep nmc)"
         id: lib
 
-      - name: Copy jar to artifact directory
-        run: cp ./build/libs/${{ steps.lib.outputs.lib_name }} ./artifact/
+    - name: Copy jar to artifact directory
+      run: cp ./build/libs/${{ steps.lib.outputs.lib_name }} ./artifact/
 
     # - name: Upload build artifact
     #   uses: actions/upload-artifact@v3
