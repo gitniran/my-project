@@ -77,7 +77,9 @@ jobs:
       # env:
       #   VERSION: ${{ steps.get-version.outputs.result }}
       run: |
-          aws s3 cp . s3://$BUCKET/ --recursive --exclude="*" --include="*.zip" --no-progress
+        pwd
+        ls -l
+        aws s3 cp /my-project s3://my-tf-test-bucket-25072022 --recursive --exclude="*" --include="*.zip" --no-progress
 
 
       
