@@ -46,7 +46,7 @@ jobs:
     - name: Gradle release
       uses: gradle/gradle-build-action@v2
       with:
-        build-root-directory: $PATH
+        build-root-directory: 
         arguments: release -Prelease.customUsername=$GITHUB_ACTOR -Prelease.customPassword=${{ secrets.GITHUB_TOKEN }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -54,7 +54,7 @@ jobs:
     - name: Gradle Build
       uses: gradle/gradle-build-action@v2
       with:
-        build-root-directory: $PATH
+        build-root-directory: 
         arguments: clean build
 
     - uses: actions/github-script@v6
