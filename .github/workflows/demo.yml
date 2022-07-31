@@ -100,7 +100,7 @@ jobs:
     - name: Create release
       uses: actions/create-release@v1
       with:
-        tag_name: ${{ steps.current_version.outputs.app_version }}
+        tag_name: v1${{ steps.current_version.outputs.app_version }}
         release_name: Release ${{ steps.current_version.outputs.app_version }}
         draft: false
         prerelease: false
