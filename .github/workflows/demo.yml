@@ -74,11 +74,10 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
     - name: Upload to s3
-      env:
-        VERSION: ${{ steps.get-version.outputs.result }}
+      # env:
+      #   VERSION: ${{ steps.get-version.outputs.result }}
       run: |
-          ls -l ./build/distributions
-          aws s3 cp ./build/distributions/ s3://$BUCKET/$VERSION/ --recursive --exclude="*" --include="*.zip" --no-progress
+          aws s3 cp . s3://$BUCKET/ --recursive --exclude="*" --include="*.zip" --no-progress
 
 
       
