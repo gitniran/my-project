@@ -43,19 +43,17 @@ jobs:
       with:
         files: "./build/test-results/**/*.xml"
 
-    - name: Gradle release
-      uses: gradle/gradle-build-action@v2
-      with:
-        build-root-directory: 
-        arguments: release -Prelease.customUsername=$GITHUB_ACTOR -Prelease.customPassword=${{ secrets.GITHUB_TOKEN }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Gradle release
+    #   uses: gradle/gradle-build-action@v2
+    #   with:
+    #     build-root-directory: 
+    #     arguments: release -Prelease.customUsername=$GITHUB_ACTOR -Prelease.customPassword=${{ secrets.GITHUB_TOKEN }}
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
     - name: Gradle Build
       uses: gradle/gradle-build-action@v2
-      with:
-        build-root-directory: 
-        arguments: clean build
+      run: ./gradlew build
 
     - uses: actions/github-script@v6
       id: get-version
