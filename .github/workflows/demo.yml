@@ -13,7 +13,7 @@ on:
 env:
   #ARTIFACT_FOLDER_NAME: ""
   AWS_REGION: "us-east-1"
-  BUCKET: "my-tf-test-bucket-25072022"
+  #BUCKET: "my-tf-test-bucket-25072022"
 
 jobs:
   build-java:
@@ -31,21 +31,21 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@v2
-      with:
-        build-root-directory: 
-        arguments: build
+    # - name: Build with Gradle
+    #   uses: gradle/gradle-build-action@v2
+    #   with:
+    #     build-root-directory: 
+    #     arguments: build
     
     - name: Gradle Build
       #uses: gradle/gradle-build-action@v2
       run: ./gradlew build
     
-    - name: Publish test results
-      uses: enricoMi/Publish-unit-test-result-action@v1
-      if: always()
-      with:
-        files: "./build/test-results/**/*.xml"
+    # - name: Publish test results
+    #   uses: enricoMi/Publish-unit-test-result-action@v1
+    #   if: always()
+    #   with:
+    #     files: "./build/test-results/**/*.xml"
 
     # - name: Gradle release
     #   uses: gradle/gradle-build-action@v2
@@ -76,10 +76,10 @@ jobs:
     - name: Upload to s3
       # env:
       #   VERSION: ${{ steps.get-version.outputs.result }}
-      run: |
-        pwd
-        ls -l
-        aws s3 cp . s3://my-tf-test-bucket-25072022 --recursive --exclude="*" --include="*.zip" --no-progress
+          run: |
+            pwd
+            ls -l /home/runner/work/my-project/my-project
+            aws s3 cp . s3://my-tf-test-bucket-25072022 --recursive 
 
 
       
