@@ -116,9 +116,11 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: newsroom_nmc-dgs.zip
-        asset_name: newsroom_nmc-dgs.zip
+        asset_path: newsroom_nmc-dgs-${{ steps.current_version.outputs.app_version }}.zip
+        asset_name: newsroom_nmc-dgs-${{ steps.current_version.outputs.app_version }}.zip
         asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
