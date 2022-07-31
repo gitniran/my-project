@@ -4,7 +4,7 @@
 name: Demo-gradle-project
 
 on:
-  without_dispatch:
+  workflow_dispatch:
     input:
       version:
         description: Demo project
@@ -29,5 +29,11 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
+    
+    - name: list the path
+      run: |
+          pwd
+          ls -l
+
       
          
