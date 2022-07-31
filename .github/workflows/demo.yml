@@ -42,14 +42,45 @@ jobs:
       if: always()
       with:
         files: "./build/test-results/**/*.xml"
-      
 
-     # run: ./gradlew build
-    
-    - name: list the path
+    - name: Gradle release
+      uses: gradle/gradle-build-action@v2
+      with:
+        build-root-directory: $PATH
+        arguments: release -Prelease.customUsername=$GITHUB_ACTOR -Prelease.customPassword=${{ secrets.GITHUB_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+    - name: Gradle Build
+      uses: gradle/gradle-build-action@v2
+      with:
+        build-root-directory: $PATH
+        arguments: clean build
+
+    - uses: actions/github-script@v6
+      id: get-version
+      with:
+        script: |
+          const { readdirSync } = require('fs')
+          let dirs = readdirSync(process.env.PROJECT_PATH + '/build/distributions');
+          let file = dirs.find(element => element.endsWith(".zip"));
+          let match = /([0-9]+([.][0-9]+)+(-SNAPSHOT)?)/.exec(file);
+          console.log("Found version: "+match[0])
+          return match[0]
+        result-encoding: string
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+    - name: Upload to s3
+      env:
+        VERSION: ${{ steps.get-version.outputs.result }}
       run: |
-          pwd
-          ls -l
+          ls -l ./build/distributions
+          aws s3 cp ./build/distributions/ s3://$BUCKET/$VERSION/ --recursive --exclude="*" --include="*.zip" --no-progress
+
 
       
          
