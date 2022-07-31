@@ -39,10 +39,15 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
+        catch: gradle
       # uses: gradle/gradle-build-action@v2
       # with:
       #   # build-root-directory: 
       #   arguments: build
+
+    - name: Get the current version
+      run: echo "::set-output name=app_version::$(gradle -q printVersion)"
+      id: current_version
 
     - name: Get the lib name
       run: |
@@ -91,6 +96,15 @@ jobs:
     #       return match[0]
     #     result-encoding: string
 
+    - name: Create release
+      uses: actions/create-release@v1
+      with:
+        tag_name: v${{ steps.current_version.outputs.app_version }}
+        release_name: Release ${{ steps.current_version.outputs.app_version }}
+        draft: false
+        prerelease: false
+      id: create_release
+
     - name: Prepare an artifact
       run: |
         pushd ./artifact
@@ -98,7 +112,7 @@ jobs:
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       with:
-        upload_url: newsroom_nmc-dgs
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: newsroom_nmc-dgs.zip
         asset_name: newsroom_nmc-dgs.zip
         asset_content_type: application/zip
