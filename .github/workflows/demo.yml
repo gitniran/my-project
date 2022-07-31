@@ -5,7 +5,7 @@ name: Demo-gradle-project
 
 on:
   workflow_dispatch:
-    input:
+    inputs:
       version:
         description: Demo project
         required: true
@@ -47,7 +47,7 @@ jobs:
       run: |
           mv ./build/libs/*.jar ./build/libs/newsroom_nmc-dgs.jar
           echo "::set-output name=lib_name::$(ls build/libs | grep -v "plain" | grep nmc)"
-        id: lib
+      id: lib
 
     - name: Copy jar to artifact directory
       run: cp ./build/libs/${{ steps.lib.outputs.lib_name }} ./artifact/
@@ -109,7 +109,7 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
 
     - name: Download dd-java-agent
-        run: wget -O ./artifact/dd-java-agent.jar https://dtdg.co/latest-java-tracer
+      run: wget -O ./artifact/dd-java-agent.jar https://dtdg.co/latest-java-tracer
 
     - name: Upload to s3
       # env:
